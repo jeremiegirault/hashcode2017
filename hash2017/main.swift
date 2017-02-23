@@ -10,7 +10,7 @@ import Foundation
 
 print("# NinjaPirateRockstar hashcode2017")
 
-let filename = "trending_today.in"
+let filename = "me_at_the_zoo.in"
 
 struct ComputedScore: CustomStringConvertible {
     let endpoint: Endpoint
