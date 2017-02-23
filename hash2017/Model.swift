@@ -197,3 +197,32 @@ extension Model {
     }
 }
 
+extension Model {
+
+    func outputSolution() -> String {
+
+        let filledCacheServers = self.cacheServers.values.filter { server in
+            !server.videos.isEmpty
+        }
+
+        var solution = ""
+        let serverCount = filledCacheServers.count
+        solution.append(String(serverCount))
+        solution.append("\n")
+
+        for server in filledCacheServers {
+            let serverId = String(server.identifier)
+            let videoIds = server.videos.map { String($0.identifier) }
+            let serverDescription = [serverId] + videoIds
+
+            solution.append(serverDescription.joined(separator: " "))
+            solution.append("\n")
+        }
+
+        return solution
+    }
+
+
+
+}
+
