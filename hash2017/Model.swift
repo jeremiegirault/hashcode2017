@@ -47,9 +47,13 @@ struct Model {
 
     init(lines: [String]) {
 
-        var mutableLines = lines
+        var currentLine = 0
+        let readNextLine = { () -> [String] in 
+            defer { currentLine += 1 }
+            return lines[currentLine].components(separatedBy: " ")
+        }
 
-        let counts = mutableLines.removeFirst().components(separatedBy: " ")
+        let counts = readNextLine()
 
         let _ = Int(counts[0])! // Unused number of videos
         let numberOfEndpoints = Int(counts[1])!
@@ -60,20 +64,21 @@ struct Model {
 
         cacheServers = (0..<numberOfCacheServers).map { CacheServer(identifier: $0, capacity: capacityOfCacheServers) }
 
-        let videosDescription = mutableLines.removeFirst().components(separatedBy: " ")
+        let videosDescription = readNextLine()
+
         videos = videosDescription.enumerated().map { Video(identifier: Int($0), size: Megabytes($1)!) }
 
         var endpoints = [Endpoint]()
 
         for i in 0..<numberOfEndpoints {
-            let endpointConfig = mutableLines.removeFirst().components(separatedBy: " ")
+            let endpointConfig = readNextLine()
             let latency = TimeInterval(endpointConfig[0])!
             let numberOfConnections = Int(endpointConfig[1])!
 
             var connections = [CacheConnection]()
 
             for _ in 0..<numberOfConnections {
-                let configConnection = mutableLines.removeFirst().components(separatedBy: " ")
+                let configConnection = readNextLine()
                 let serverId = Int(configConnection[0])!
                 let latency = TimeInterval(configConnection[1])!
                 connections.append(CacheConnection(serverId: serverId, latency: latency))
@@ -88,7 +93,7 @@ struct Model {
         var requestDescriptions = [RequestDescription]()
 
         for _ in 0..<numberOfRequestDescriptions {
-            let requestDescConfig = mutableLines.removeFirst().components(separatedBy: " ")
+            let requestDescConfig = readNextLine()
 
             let videoId = Int(requestDescConfig[0])!
             let endpointId = Int(requestDescConfig[1])!
