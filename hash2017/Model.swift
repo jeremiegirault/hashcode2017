@@ -177,6 +177,8 @@ struct Model {
 extension Model {
 
     func computeScore() -> Double {
+        
+        let numReq = Double(requestDescriptions.reduce(0) { $0 + $1.numberOfRequests })
 
         return requestDescriptions.reduce (Double(0)) { (acc, requestDescription) in
             let endpoint = requestDescription.endpoint
@@ -197,7 +199,7 @@ extension Model {
             let gain = worstLatency - bestLatency
 
             return acc + (gain * Double(requestDescription.numberOfRequests))
-        }
+        } * 1000 / numReq
     }
 }
 

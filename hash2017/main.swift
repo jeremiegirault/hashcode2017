@@ -10,7 +10,7 @@ import Foundation
 
 print("# NinjaPirateRockstar hashcode2017")
 
-let filename = "me_at_the_zoo.in"
+let filename = "trending_today.in"
 
 struct ComputedScore: CustomStringConvertible {
     let endpoint: Endpoint
@@ -34,6 +34,8 @@ main(filename, parser: Model.init) { model in
     
     var tab = [CacheServer:Propositions]()
     
+    print("# Computing Score Data structures...")
+    var i = 0
     for req in model.requestDescriptions {
         for connection in req.endpoint.connections {
             let latency = (req.endpoint.latency - connection.latency) * Double(req.numberOfRequests)
@@ -50,8 +52,15 @@ main(filename, parser: Model.init) { model in
                 propositions.scores.append(score)
             }
         }
+        
+        i += 1
+        print("## \(100 * Double(i) / Double(model.requestDescriptions.count))%")
     }
+    
+    print("# Computing cache videos...")
     //
+    
+    i = 0
     for (_, cache) in model.cacheServers {
         guard let proposition = tab[cache] else { continue }
         
@@ -63,9 +72,14 @@ main(filename, parser: Model.init) { model in
                 cache.videos.insert(score.video)
             }
         }
+        
+        i += 1
+        print("## \(100 * Double(i) / Double(model.cacheServers.count))%")
     }
     
     
-    return "\(tab)"
+    
+    
+    return "\(model.computeScore())"
 }
 
