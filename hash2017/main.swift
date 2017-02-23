@@ -10,12 +10,12 @@ import Foundation
 
 print("# NinjaPirateRockstar hashcode2017")
 
-let filename = "videos_worth_spreading.in"
+let filename = "kittens.in"
 
 struct ComputedScore: CustomStringConvertible {
     let endpoint: Endpoint
     let video: Video
-    let score: Double
+    var score: Double
     
     var description: String {
         return "ComputedScore(endpoint: \(endpoint.identifier), video: \(video.identifier), score: \(score))"
@@ -40,7 +40,9 @@ main(filename, parser: Model.init) { model in
         for connection in req.endpoint.connections {
             let latency = (req.endpoint.latency - connection.latency) * Double(req.numberOfRequests)
             
-            let magic = latency
+            let magic = latency * (1 - (req.video.size / connection.server.capacity))
+            
+            //let connectedCaches = req.endpoint.connections.lazy.map { $0.server }.
             
             let score = ComputedScore(endpoint: req.endpoint, video: req.video, score: magic)
             
@@ -57,17 +59,28 @@ main(filename, parser: Model.init) { model in
         print("## \(100 * Double(i) / Double(model.requestDescriptions.count))%")
     }
     
-    print("# Computing cache videos...")
+    print("# Sorting scores...")
     //
     
     i = 0
-    for (_, cache) in model.cacheServers {
+    let count = tab.values.count
+    for prop in tab.values {
+        prop.scores.sort { $0.score > $1.score }
+        
+        i += 1
+        print("## \(100 * Double(i) / Double(count))%")
+    }
+    
+    print("# Computing cache videos...")
+    
+    i = 0
+    for cache in model.cacheServers.values {
         guard let proposition = tab[cache] else { continue }
         
-        let sortedScores = proposition.scores.sorted { $0.score > $1.score }
-        for score in sortedScores {
-            guard cache.remainingCapacity > 0 else { break }
-            if score.video.size < cache.remainingCapacity {
+        for score in proposition.scores {
+            let capa = cache.remainingCapacity
+            guard capa > 0 else { break }
+            if score.video.size < capa {
                 cache.videos.insert(score.video)
             }
         }

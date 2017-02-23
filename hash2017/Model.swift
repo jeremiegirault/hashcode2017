@@ -30,10 +30,20 @@ class CacheServer: Hashable, Equatable {
     let identifier: Int
     let capacity: Megabytes
 
-    var videos = Set<Video>()
+    private var remainingCapacityInvalid: Bool = true
     
+    var videos = Set<Video>() {
+        didSet { self.remainingCapacityInvalid = true }
+    }
+    
+    private var cachedRemainingCapacity: Megabytes = 0
     var remainingCapacity: Megabytes {
-        return capacity - videos.reduce(0) { $0 + $1.size }
+        if remainingCapacityInvalid {
+            cachedRemainingCapacity = capacity - videos.reduce(0) { $0 + $1.size }
+            remainingCapacityInvalid = false
+        }
+        
+        return cachedRemainingCapacity
     }
 
     init(identifier: Int, capacity: Megabytes) {
