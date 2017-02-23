@@ -25,10 +25,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0196A94C1E5F575500F33324 /* kittens.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = kittens.in; sourceTree = "<group>"; };
+		0196A94D1E5F575500F33324 /* trending_today.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = trending_today.in; sourceTree = "<group>"; };
+		0196A94E1E5F575500F33324 /* videos_worth_spreading.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = videos_worth_spreading.in; sourceTree = "<group>"; };
+		0196A94F1E5F575500F33324 /* me_at_the_zoo.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = me_at_the_zoo.in; sourceTree = "<group>"; };
 		98D8B8E91E5F01830076E17F /* hash2017 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = hash2017; sourceTree = BUILT_PRODUCTS_DIR; };
 		98D8B8EC1E5F01830076E17F /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		98D8B8F31E5F01CB0076E17F /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
-		98D8B8F51E5F06460076E17F /* example.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = example.txt; sourceTree = "<group>"; };
 		98D8B8F61E5F0D280076E17F /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -46,7 +49,10 @@
 		98D8B8E01E5F01830076E17F = {
 			isa = PBXGroup;
 			children = (
-				98D8B8F51E5F06460076E17F /* example.txt */,
+				0196A94C1E5F575500F33324 /* kittens.in */,
+				0196A94D1E5F575500F33324 /* trending_today.in */,
+				0196A94E1E5F575500F33324 /* videos_worth_spreading.in */,
+				0196A94F1E5F575500F33324 /* me_at_the_zoo.in */,
 				98D8B8EB1E5F01830076E17F /* hash2017 */,
 				98D8B8EA1E5F01830076E17F /* Products */,
 			);
@@ -263,6 +269,7 @@
 				98D8B8F21E5F01830076E17F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
