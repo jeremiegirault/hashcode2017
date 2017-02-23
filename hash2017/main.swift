@@ -10,9 +10,9 @@ import Foundation
 
 print("# NinjaPirateRockstar hashcode2017")
 
-let filename = "example.txt"
+let filename = "me_at_the_zoo.in"
 
 main(filename, parser: Model.init) { model in
-    return "abcdef"
+    return "\(model)"
 }
 
