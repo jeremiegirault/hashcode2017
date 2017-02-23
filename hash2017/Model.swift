@@ -31,6 +31,10 @@ class CacheServer: Hashable, Equatable {
     let capacity: Megabytes
 
     var videos = Set<Video>()
+    
+    var remainingCapacity: Megabytes {
+        return capacity - videos.reduce(0) { $0 + $1.size }
+    }
 
     init(identifier: Int, capacity: Megabytes) {
         self.identifier = identifier
