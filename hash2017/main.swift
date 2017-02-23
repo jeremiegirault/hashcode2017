@@ -10,7 +10,7 @@ import Foundation
 
 print("# NinjaPirateRockstar hashcode2017")
 
-let filename = "me_at_the_zoo.in"
+let filename = "videos_worth_spreading.in"
 
 struct ComputedScore: CustomStringConvertible {
     let endpoint: Endpoint
@@ -65,7 +65,6 @@ main(filename, parser: Model.init) { model in
         guard let proposition = tab[cache] else { continue }
         
         let sortedScores = proposition.scores.sorted { $0.score > $1.score }
-        var i = 0
         for score in sortedScores {
             guard cache.remainingCapacity > 0 else { break }
             if score.video.size < cache.remainingCapacity {
@@ -78,8 +77,8 @@ main(filename, parser: Model.init) { model in
     }
     
     
+    print("# final score: \(model.computeScore())")
     
-    
-    return "\(model.computeScore())"
+    return "\(model.outputSolution())"
 }
 
