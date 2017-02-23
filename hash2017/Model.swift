@@ -170,3 +170,30 @@ struct Model {
     }
 }
 
+extension Model {
+
+    func computeScore() -> Double {
+
+        return requestDescriptions.reduce (Double(0)) { (acc, requestDescription) in
+            let endpoint = requestDescription.endpoint
+            let video = requestDescription.video
+
+            let worstLatency = endpoint.latency
+
+            let bestLatency = endpoint.connections
+                .filter { connection in
+                    connection.server.videos.contains(video)
+                }
+                .map { connection in
+                    connection.latency
+                }
+                .sorted()
+                .first ?? worstLatency
+
+            let gain = worstLatency - bestLatency
+
+            return acc + (gain * Double(requestDescription.numberOfRequests))
+        }
+    }
+}
+
